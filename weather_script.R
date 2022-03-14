@@ -5,8 +5,22 @@
 
 
 
-# First The Data will import the data into the working envirenemnt from 
+# First The Data will import the data into the working environment from 
 # the tracker
 
-tracker_name = "HBD"
 
+#Get the name of the tracker
+
+tracker_name <- "HBDIR"
+
+#Get the file type
+
+data_type <- ".csv"
+
+#Combine for file name
+
+file_name <- paste(tracker_name, data_type, sep = "")
+
+#Read the CV data and assign it to a variable
+
+count_data <- read.csv2(file_name)
