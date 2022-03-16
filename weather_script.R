@@ -34,6 +34,10 @@ file_name <- paste(tracker_name, data_type, sep = "")
 
 count_data <- read.csv2(file_name)
 
+# Get the CSV to have 3 columns with the relevant information in each
+
+
+
 # Get the times at which the data was collected
 #-------------------------------------------------------------
 
