@@ -134,7 +134,7 @@ weather <- read.csv('https://weather.visualcrossing.com/VisualCrossingWebService
 
 weather_names <- colnames(weather)
 
-#create the new dataframe with the colnames
+# create the new dataframe with the colnames
 
 weather1 <- data.frame(weather_names)
 
@@ -148,9 +148,9 @@ weather1 <- data.frame(weather_names)
 
 temp_data <- data.frame()
 
-for (i in 1:nrow(weather1)) {
+for (i in 1:ncol(weather1)) {
   
-  temp_data <- str_extract_all(weather[i, 1], "temp")
+  temp_data <- str_extract_all(weather[i, 1], "\\w")
   
 }
 
