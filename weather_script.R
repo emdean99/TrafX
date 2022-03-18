@@ -4,13 +4,15 @@
 # Data range
 
 # This data pulls from the documents folder, make sure that your CSV is
-#Named right and in the documents folder
+# Named right and in the documents folder
+
 ##############################################################
 #-------------------------------------------------------------
 
 
 # First The Data will import the data into the working environment from 
 # the tracker
+
 ##############################################################
 #-------------------------------------------------------------
 
@@ -42,6 +44,7 @@ count_data <- read.csv2(file_name)
 
 # Create a new variable for the newly created data frame with 3 columns for
 # The three columns of data
+
 ##############################################################
 #-------------------------------------------------------------
 
@@ -88,6 +91,7 @@ colnames(count_data1) <- c('Date', 'Hour', 'Count')
 
 
 # Get the times at which the data was collected
+
 ##############################################################
 #-------------------------------------------------------------
 
@@ -112,7 +116,8 @@ print(paste("Start time =", start_time, "End Time=", end_time, sep=" "))
 
 
 # Get the weather information for that time
-
+##############################################################
+#-------------------------------------------------------------
 
 
 weather <- read.csv('https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/montpelier%2520vermont/2021-04-28/2021-05-14?include=fcst%2Cobs%2Chistfcst%2Cstats%2Chours&key=NEVVZ6BDLFDNDBMTUR4Y3RA3S&options=preview&contentType=json')
