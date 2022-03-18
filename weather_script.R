@@ -80,6 +80,13 @@ for(i in 1:nrow(count_data)) {
                                         '\\d+')
 }
 
+
+#Change the column names to represent the information that they hold
+
+colnames(count_data1) <- c('Date', 'Hour', 'Count')
+
+
+
 # Get the times at which the data was collected
 ##############################################################
 #-------------------------------------------------------------
