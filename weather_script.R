@@ -5,11 +5,13 @@
 
 # This data pulls from the documents folder, make sure that your CSV is
 #Named right and in the documents folder
+##############################################################
 #-------------------------------------------------------------
 
 
 # First The Data will import the data into the working environment from 
 # the tracker
+##############################################################
 #-------------------------------------------------------------
 
 
@@ -18,6 +20,7 @@ library(tidyselect)
 library(tidyverse)
 library(ggplot2)
 library(dplyr)
+library(stringr)
 
 
 # Get the name of the tracker
@@ -36,11 +39,61 @@ file_name <- paste(tracker_name, data_type, sep = "")
 
 count_data <- read.csv2(file_name)
 
+
+##############################################################
+
+# Temporarily here as a test for the stringr functions used to create the 
+# 3 column dataframe
+
+test <- count_data[1,1]
+
+test2 <- str_extract_all(test, '\\d\\/\\d+\\/\\d+')
+test3 <- str_extract_all(test, '\\d+\\:\\d+')
+test4 <- str_extract_all(test, '\\,\\d+')
+test5 <- str_extract_all(test4, '\\d+')
 # Get the CSV to have 3 columns with the relevant information in each
+##############################################################
+#-------------------------------------------------------------
+  
+
+# Create a new variable for the newly created data frame with 3 columns for
+# The three columns of data
+  
+count_data1 <- data.frame(matrix(nrow = nrow(count_data), ncol = 3))
 
 
+# Try using a recursive function to set each column to an individual string for 
+# modification
+# This will use the stringr library to use regular expressions to extract the 
+# 3 different variables and set them as different columns in the recursive 
+# Function
+
+
+# Extract the data and set it as the first column using regular expressions from stringr
+
+
+for(i in 1:nrow(count_data)) {
+  count_data1[i , 1] <- str_extract_all(count_data[i , 1], '\\d\\/\\d+\\/\\d+') 
+}
+
+# Extract the hour of the day and set at the second column using regular expressions from stringr
+
+for(i in 1:nrow(count_data)) {
+  count_data1[i , 2] <- str_extract_all(count_data[i , 1], '\\d+\\:\\d+') 
+}
+
+# Extract the count data and set it as the third column using regular expressions from stringr
+# This one is a little harder because to extract the comma needs to be used otherwise the \\d+
+# has no way of distinguishing from other groups 
+# to mitigate this I am going to first use \\,\\d+ to extract the command and number
+# then I will use \\d+ on that variable to extract the number
+
+for(i in 1:nrow(count_data)) {
+  count_data1[i , 3] <- count_data[i , 1] 
+}
 
 # Get the times at which the data was collected
+##############################################################
 #-------------------------------------------------------------
 
 
