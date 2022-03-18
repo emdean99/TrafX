@@ -127,7 +127,7 @@ weather <- read.csv('https://weather.visualcrossing.com/VisualCrossingWebService
 
 # It seems the data from this for some reason is all in the column names so 
 # I am going to do some data cleanup, first by just setting it all as rows in
-# a dataframe
+# a data frame
 
 
 # get the colnames in a list
@@ -148,9 +148,9 @@ weather1 <- data.frame(weather_names)
 
 temp_data <- data.frame()
 
-for (i in 1:ncol(weather1)) {
+for (i in 1:nrow(weather1)) {
   
-  temp_data <- str_extract_all(weather[i, 1], "\\w")
+  temp_data <- str_extract_all(weather1[i,1], '\\temp\\.\\d+\\.\\d+')
   
 }
 
