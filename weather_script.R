@@ -120,5 +120,37 @@ print(paste("Start time =", start_time, "End Time=", end_time, sep=" "))
 #-------------------------------------------------------------
 
 
+# Download the data from visual crossing weather. The date and time gotten above
+# can be used to select a location and timeframe from data
+
 weather <- read.csv('https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/montpelier%2520vermont/2021-04-28/2021-05-14?include=fcst%2Cobs%2Chistfcst%2Cstats%2Chours&key=NEVVZ6BDLFDNDBMTUR4Y3RA3S&options=preview&contentType=json')
+
+# It seems the data from this for some reason is all in the column names so 
+# I am going to do some data cleanup, first by just setting it all as rows in
+# a dataframe
+
+
+# get the colnames in a list
+
+weather_names <- colnames(weather)
+
+#create the new dataframe with the colnames
+
+weather1 <- data.frame(weather_names)
+
+
+
+# Pull out Important Information from the massive data frame for usage
+##############################################################
+#-------------------------------------------------------------
+
+# First pull out temperature data using a for loop and set it as its own DF 
+
+temp_data <- data.frame()
+
+for (i in 1:nrow(weather1)) {
+  
+  temp_data <- str_extract_all(weather[i, 1], "temp")
+  
+}
 
