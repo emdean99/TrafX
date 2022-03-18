@@ -40,24 +40,11 @@ file_name <- paste(tracker_name, data_type, sep = "")
 count_data <- read.csv2(file_name)
 
 
-##############################################################
-
-# Temporarily here as a test for the stringr functions used to create the 
-# 3 column dataframe
-
-test <- count_data[1,1]
-
-test2 <- str_extract_all(test, '\\d\\/\\d+\\/\\d+')
-test3 <- str_extract_all(test, '\\d+\\:\\d+')
-test4 <- str_extract_all(test, '\\,\\d+')
-test5 <- str_extract_all(test4, '\\d+')
-# Get the CSV to have 3 columns with the relevant information in each
-##############################################################
-#-------------------------------------------------------------
-  
-
 # Create a new variable for the newly created data frame with 3 columns for
 # The three columns of data
+##############################################################
+#-------------------------------------------------------------
+
   
 count_data1 <- data.frame(matrix(nrow = nrow(count_data), ncol = 3))
 
@@ -89,7 +76,8 @@ for(i in 1:nrow(count_data)) {
 # then I will use \\d+ on that variable to extract the number
 
 for(i in 1:nrow(count_data)) {
-  count_data1[i , 3] <- count_data[i , 1] 
+  count_data1[i , 3] <- str_extract_all(str_extract_all(count_data[i , 1], '\\,\\d+'),
+                                        '\\d+')
 }
 
 # Get the times at which the data was collected
