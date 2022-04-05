@@ -83,12 +83,21 @@ for(i in 1:nrow(count_data)) {
                                         '\\d+')
 }
 
+# make sure all count data is as numeric
+
+count_data1[,3] <- as.numeric(count_data1[,3])
+
+# verify it is as numeric using the first row as a test
+
+is.numeric(count_data1[1,3])
+
+# add an hour since start time column
+
+count_data1 <- cbind(count_data1, 1:nrow(count_data1))
 
 #Change the column names to represent the information that they hold
 
-colnames(count_data1) <- c('Date', 'Hour', 'Count')
-
-
+colnames(count_data1) <- c('Date', 'Hour', 'Count', 'Passed')
 
 # Get the times at which the data was collected
 
@@ -153,4 +162,14 @@ for (i in 1:nrow(weather1)) {
   temp_data <- str_extract_all(weather1[ ,1], '\\temp\\.\\d+\\.\\d+')
   
 }
+
+
+# Graph the Data
+##############################################################
+#-------------------------------------------------------------
+
+ggplot(data = count_data1,
+       mapping = aes(x = Passed, y = Count)) + 
+         geom_point()
+
 
