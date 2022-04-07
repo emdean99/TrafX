@@ -170,6 +170,6 @@ for (i in 1:nrow(weather1)) {
 
 ggplot(data = count_data1,
        mapping = aes(x = Passed, y = Count)) + 
-         geom_point()
+         geom_point() + geom_line()
 
 
