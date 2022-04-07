@@ -159,7 +159,7 @@ temp_data <- data.frame()
 
 for (i in 1:nrow(weather1)) {
   
-  temp_data <- str_extract_all(weather1[ ,1], '\\temp\\.\\d+\\.\\d+')
+  temp_data <- str_extract_all(weather1[ ,1], '\\temp+')
   
 }
 
