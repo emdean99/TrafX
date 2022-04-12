@@ -145,21 +145,44 @@ weather <- read.csv('https://weather.visualcrossing.com/VisualCrossingWebService
 
 # First pull out temperature data using a for loop and set it as its own DF 
 
-temp_data <- data.frame()
+temp_data <- data.frame(1:nrow(weather), weather[,3])
 
-for (i in 1:nrow(weather1)) {
-  
-  temp_data <- str_extract_all(weather1[,1], '\\temp+')
-  
-}
+# Change the names to be easily graphable
+
+colnames(temp_data) <- c('Passed', 'Temp')
 
 
-# Graph the Data
+# Graph the Data on the same table
 ##############################################################
 #-------------------------------------------------------------
 
-ggplot(data = count_data1,
+# Create the count graph
+
+count_graph <- ggplot(data = count_data1,
        mapping = aes(x = Passed, y = Count)) + 
-         geom_point() + geom_line()
+         geom_point() + geom_line() 
+
+# Create the temp graph over time graph
+
+temp_graph <- ggplot(data = temp_data,
+                     mapping = aes(x= Passed, y = Temp)) + geom_line() + geom_point()
+
+# Create the complete graph
+
+temp_count_graph <- ggplot(data = NULL) + 
+  geom_line(data = count_data1, mapping = aes(x = Passed, y = Count)) + 
+  geom_line(data = temp_data, mapping = aes(x = Passed, y = Temp))
+
+# Print Graphs
+##############################################################
+#-------------------------------------------------------------
 
 
+# Print Count
+print(count_graph)
+
+# Print Temp
+print(temp_graph)
+
+# Print Combined
+print(temp_count_graph)
