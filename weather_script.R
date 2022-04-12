@@ -170,8 +170,8 @@ temp_graph <- ggplot(data = temp_data,
 # Create the complete graph
 
 temp_count_graph <- ggplot(data = NULL) + 
-  geom_line(data = count_data1, mapping = aes(x = Passed, y = Count)) + 
-  geom_line(data = temp_data, mapping = aes(x = Passed, y = Temp))
+  geom_line(data = count_data1, mapping = aes(x = Passed, y = Count, color = 'red')) + 
+  geom_line(data = temp_data, mapping = aes(x = Passed, y = Temp, color = 'blue'))
 
 # Print Graphs
 ##############################################################
