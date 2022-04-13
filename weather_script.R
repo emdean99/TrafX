@@ -147,16 +147,19 @@ print(paste("Start time =", start_time, "End Time=", end_time, sep=" "))
 # When doing this it is important to first copy and paste the data into the web 
 # Browser. I am not sure exactly why, maybe it makes the webpage for you to go
 # to at a later date
+# Make sure the tempurature is proper and by hourly or daily before running
 
 weather <- read.csv('https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/retrievebulkdataset?&key=GVED83F4SV56PXKZRE6V8Z4GJ&taskId=519c9988392756d556ef5b554ce86ad6&zip=false')
 
 # Now that we have the data remove the hours before the trackers start time
 # from the data frame
 # do this using a for loop which removes the top 17 rows for every column 
+# MAKE SURE TO ONLY RUN ONCE OTHERWISE IT KEEPS OFFSETTING THE DATA
+# AND THE DATA NEEDS TO BE REINITIATED
 
 
 for (i in (start_hour-1)) {
-  weather_test <- weather_test[-c(1:(start_hour)), ]
+  weather <- weather[-c(1:(start_hour)), ]
 }
 
 
