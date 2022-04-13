@@ -28,10 +28,11 @@ library(stringr)
 library(viridis)
 
 
+
 # Get the name of the tracker
 # This will be the filename you want to import
 
-tracker_name <- "HBDIR"
+tracker_name <- "HBDIRD"
 
 # Get the file type
 
@@ -43,7 +44,7 @@ file_name <- paste(tracker_name, data_type, sep = "")
 
 # Read the CV data and assign it to a variable
 
-count_data <- read.csv2(file_name)
+count_dataD <- read.csv2(file_name)
 
 
 # Create a new variable for the newly created data frame with 3 columns for
@@ -53,7 +54,7 @@ count_data <- read.csv2(file_name)
 #-------------------------------------------------------------
 
 
-count_data1 <- data.frame(matrix(nrow = nrow(count_data), ncol = 3))
+count_dataD1 <- data.frame(matrix(nrow = nrow(count_dataD), ncol = 2))
 
 
 # Try using a recursive function to set each column to an individual string for 
@@ -66,15 +67,10 @@ count_data1 <- data.frame(matrix(nrow = nrow(count_data), ncol = 3))
 # Extract the data and set it as the first column using regular expressions from stringr
 
 
-for(i in 1:nrow(count_data)) {
-  count_data1[i , 1] <- str_extract_all(count_data[i , 1], '\\d\\/\\d+\\/\\d+') 
+for(i in 1:nrow(count_dataD)) {
+  count_dataD1[i , 1] <- str_extract_all(count_dataD[i , 1], '\\d+\\-\\d+\\-\\d+') 
 }
 
-# Extract the hour of the day and set at the second column using regular expressions from stringr
-
-for(i in 1:nrow(count_data)) {
-  count_data1[i , 2] <- str_extract_all(count_data[i , 1], '\\d+\\:\\d+') 
-}
 
 # Extract the count data and set it as the third column using regular expressions from stringr
 # This one is a little harder because to extract the comma needs to be used otherwise the \\d+
@@ -82,34 +78,34 @@ for(i in 1:nrow(count_data)) {
 # to mitigate this I am going to first use \\,\\d+ to extract the command and number
 # then I will use \\d+ on that variable to extract the number
 
-for(i in 1:nrow(count_data)) {
-  count_data1[i , 3] <- str_extract_all(str_extract_all(count_data[i , 1], '\\,\\d+'),
+for(i in 1:nrow(count_dataD)) {
+  count_dataD1[i , 2] <- str_extract_all(str_extract_all(count_dataD[i , 1], '\\,\\d+'),
                                         '\\d+')
 }
 
 # make sure all count data is as numeric
 
-count_data1[,3] <- as.numeric(count_data1[,3])
+count_dataD1[,2] <- as.numeric(count_dataD1[,2])
 
 # verify it is as numeric using the first row as a test
 
-is.numeric(count_data1[1,3])
+is.numeric(count_dataD1[1,2])
 
 # add an hour since start time column
 
-count_data1 <- cbind(count_data1, 1:nrow(count_data1))
+count_dataD1 <- cbind(count_dataD1, 1:nrow(count_dataD1))
 
 # Change the column names to represent the information that they hold
 
-colnames(count_data1) <- c('Date', 'Hour', 'Count', 'Passed')
+colnames(count_dataD1) <- c('Date', 'Count', 'Passed')
 
 
-# last, get the start time of the first collection by hour
-# This will be used to subtract that many from the start time
-# in the weather data.
-# This is because the weather data starts at 00:00 and we want it to not be out
-# of sync at all with the start of the count data
-# To do this we extract the string from the count data dataframe and 
-# make sure that it is an unlisted integer for later 
+# Make the graphs
+##############################################################
+#-------------------------------------------------------------
 
-start_hour <- unlist(as.integer(str_extract_all(str_extract_all(count_data1[1,2], '\\d\\d\\:'), '\\d+')))
+
+
+# Print the Graphs
+##############################################################
+#-------------------------------------------------------------
