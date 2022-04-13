@@ -3,8 +3,8 @@
 # From Visual Crossing and then export a set of graphs comparing the
 # Data range
 
-# This data pulls from the documents folder, make sure that your CSV is
-# Named right and in the documents folder
+# This data pulls from the working directory, make sure that your CSV is
+# Named right and in the proper working directory
 
 ##############################################################
 #-------------------------------------------------------------
@@ -26,6 +26,7 @@ library(stringr)
 
 
 # Get the name of the tracker
+# This will be the filename you want to import
 
 tracker_name <- "HBDIR"
 
@@ -95,9 +96,21 @@ is.numeric(count_data1[1,3])
 
 count_data1 <- cbind(count_data1, 1:nrow(count_data1))
 
-#Change the column names to represent the information that they hold
+# Change the column names to represent the information that they hold
 
 colnames(count_data1) <- c('Date', 'Hour', 'Count', 'Passed')
+
+
+# last, get the start time of the first collection by hour
+# This will be used to subtract that many from the start time
+# in the weather data.
+# This is because the weather data starts at 00:00 and we want it to not be out
+# of sync at all with the start of the count data
+# To do this we extract the string from the count data dataframe and 
+# make sure that it is an unlisted integer for later 
+
+start_hour <- unlist(as.integer(str_extract_all(str_extract_all(count_data1[1,2], '\\d\\d\\:'), '\\d+')))
+
 
 # Get the times at which the data was collected
 
@@ -131,13 +144,18 @@ print(paste("Start time =", start_time, "End Time=", end_time, sep=" "))
 
 # Download the data from visual crossing weather. The date and time gotten above
 # can be used to select a location and time frame from data
-
-weather <- read.csv('https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/retrievebulkdataset?&key=GVED83F4SV56PXKZRE6V8Z4GJ&taskId=519c9988392756d556ef5b554ce86ad6&zip=false')
-
 # When doing this it is important to first copy and paste the data into the web 
 # Browser. I am not sure exactly why, maybe it makes the webpage for you to go
 # to at a later date
 
+weather <- read.csv('https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/retrievebulkdataset?&key=GVED83F4SV56PXKZRE6V8Z4GJ&taskId=519c9988392756d556ef5b554ce86ad6&zip=false')
+
+# Now that we have the data remove the hours before the trackers start time
+# from the dataframe
+
+weather_test <- weather
+
+weather_test <- weather_test(rbind())
 
 # Pull out Important Information from the massive data frame for Temperature Data
 ##############################################################
