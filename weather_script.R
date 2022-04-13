@@ -23,7 +23,8 @@ library(tidyverse)
 library(ggplot2)
 library(dplyr)
 library(stringr)
-
+# color packages
+library(viridis)
 
 # Get the name of the tracker
 # This will be the filename you want to import
@@ -213,7 +214,7 @@ temp_count_graph <- ggplot(data = NULL) +
 
 # Pull out from the weather data the total precipitation
 
-precip_data <- data.frame(1:nrow(weather), weather[,11])
+precip_data <- data.frame(1:nrow(weather), weather[,7])
 
 colnames(precip_data) <- c('Passed', 'Precip_total')
 
@@ -256,7 +257,8 @@ relevent_weather <- data.frame(c(temp_data, precip_data, condition_data))
 
 # Create a graph combining temperature, precipitation and Count data
 # Show the points of trail usage, with the discrete category of conditions
-# being the color of the points on either temp or 
+# being the color of the points to be the condition and use a specific color
+# package
 
 overall_weather_graph <- ggplot(data = NULL) + 
   geom_line(data = count_data1, 
@@ -280,7 +282,7 @@ overall_weather_graph <- ggplot(data = NULL) +
   theme_bw()
 
 
-
+print(overall_weather_graph)
 
 
 # Print Graphs
