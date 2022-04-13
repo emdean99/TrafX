@@ -151,11 +151,14 @@ print(paste("Start time =", start_time, "End Time=", end_time, sep=" "))
 weather <- read.csv('https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/retrievebulkdataset?&key=GVED83F4SV56PXKZRE6V8Z4GJ&taskId=519c9988392756d556ef5b554ce86ad6&zip=false')
 
 # Now that we have the data remove the hours before the trackers start time
-# from the dataframe
+# from the data frame
+# do this using a for loop which removes the top 17 rows for every column 
 
-weather_test <- weather
 
-weather_test <- weather_test(rbind())
+for (i in (start_hour-1)) {
+  weather_test <- weather_test[-c(1:(start_hour)), ]
+}
+
 
 # Pull out Important Information from the massive data frame for Temperature Data
 ##############################################################
@@ -165,7 +168,7 @@ weather_test <- weather_test(rbind())
 
 temp_data <- data.frame(1:nrow(weather), weather[,3])
 
-# Change the names to be easily graphable
+# Change the names to be easily graph able
 
 colnames(temp_data) <- c('Passed', 'Temp')
 
