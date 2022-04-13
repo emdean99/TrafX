@@ -266,7 +266,7 @@ overall_weather_graph <- ggplot(data = NULL) +
                           y = Count, color = 'red')) + 
   geom_line(data = temp_data, 
             mapping = aes(x = Passed, 
-                          y = Temp, color = 'blue')) +
+                          y = Temp)) +
   geom_point(data = relevent_weather, 
              mapping = aes(x = Passed, 
                            y = Temp, size = Precip_total, color = Condition)) +
