@@ -247,7 +247,7 @@ precip_count_graph <- ggplot(data = NULL) +
 
 # pull out conditions for color grading the points in the graph
 
-condition_data <- data.frame(Condition = weather[,30])
+condition_data <- data.frame(Condition = weather[,22])
 
 # add the relevant weather data to a combined dataframe that can be used
 
@@ -259,11 +259,21 @@ relevent_weather <- data.frame(c(temp_data, precip_data, condition_data))
 # being the color of the points on either temp or 
 
 overall_weather_graph <- ggplot(data = NULL) + 
-  geom_line(data = count_data1, mapping = aes(x = Passed, y = Count, color = 'red')) + 
-  geom_line(data = temp_data, mapping = aes(x = Passed, y = Temp, color = 'blue')) +
-  geom_point(data = relevent_weather, mapping = aes(x = Passed, y = Temp, size = Precip_total, color = Condition)) +
-  geom_smooth(data = count_data1, mapping = aes(x = Passed, y = Count), method = lm) +
-  geom_smooth(data = temp_data, mapping = aes(x=Passed, y=Temp), method = lm) +
+  geom_line(data = count_data1, 
+            mapping = aes(x = Passed, 
+                          y = Count, color = 'red')) + 
+  geom_line(data = temp_data, 
+            mapping = aes(x = Passed, 
+                          y = Temp, color = 'blue')) +
+  geom_point(data = relevent_weather, 
+             mapping = aes(x = Passed, 
+                           y = Temp, size = Precip_total, color = Condition)) +
+  geom_smooth(data = count_data1, 
+              mapping = aes(x = Passed, 
+                            y = Count), method = lm) +
+  geom_smooth(data = temp_data, 
+              mapping = aes(x = Passed, 
+                            y=Temp), method = lm) +
   labs(x = 'Hours since tracking start',
        y = 'Count/Temp',
        title = 'Trail usage Vs Montpeliers Weather conditions') +
