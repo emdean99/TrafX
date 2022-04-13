@@ -165,13 +165,24 @@ count_graph <- ggplot(data = count_data1,
 # Create the temp graph over time graph
 
 temp_graph <- ggplot(data = temp_data,
-                     mapping = aes(x= Passed, y = Temp)) + geom_line() + geom_point()
+                     mapping = aes(x= Passed, y = Temp)) + 
+  geom_line() + 
+  geom_point()
 
 # Create the complete graph
 
 temp_count_graph <- ggplot(data = NULL) + 
   geom_line(data = count_data1, mapping = aes(x = Passed, y = Count, color = 'red')) + 
-  geom_line(data = temp_data, mapping = aes(x = Passed, y = Temp, color = 'blue'))
+  geom_line(data = temp_data, mapping = aes(x = Passed, y = Temp, color = 'blue')) +
+  geom_smooth(data = count_data1, mapping = aes(x = Passed, y = Count), method = lm) +
+  geom_smooth(data = temp_data, mapping = aes(x=Passed, y=Temp), method = lm) +
+  labs(x = 'Hours since tracking start',
+       y = 'Count/Temp',
+       title = 'Trail usage Vs Montpeliers tempurature') +
+  theme_bw()
+
+
+
 
 # Print Graphs
 ##############################################################
