@@ -132,14 +132,14 @@ print(paste("Start time =", start_time, "End Time=", end_time, sep=" "))
 # Download the data from visual crossing weather. The date and time gotten above
 # can be used to select a location and time frame from data
 
-weather <- read.csv('https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/montpelier%2520vermont/2021-03-28/2021-04-12?include=hours&key=NEVVZ6BDLFDNDBMTUR4Y3RA3S&options=preview&contentType=csv')
+weather <- read.csv('https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/retrievebulkdataset?&key=GVED83F4SV56PXKZRE6V8Z4GJ&taskId=519c9988392756d556ef5b554ce86ad6&zip=false')
 
 # When doing this it is important to first copy and paste the data into the web 
 # Browser. I am not sure exactly why, maybe it makes the webpage for you to go
 # to at a later date
 
 
-# Pull out Important Information from the massive data frame for usage
+# Pull out Important Information from the massive data frame for Temperature Data
 ##############################################################
 #-------------------------------------------------------------
 
@@ -152,7 +152,7 @@ temp_data <- data.frame(1:nrow(weather), weather[,3])
 colnames(temp_data) <- c('Passed', 'Temp')
 
 
-# Graph the Data on the same table
+# Graph the Temp Data on the same table
 ##############################################################
 #-------------------------------------------------------------
 
@@ -183,6 +183,71 @@ temp_count_graph <- ggplot(data = NULL) +
 
 
 
+# Pull out Important Information from the massive data frame for Precipitation Data
+##############################################################
+#-------------------------------------------------------------
+
+# Pull out from the weather data the total precipitation
+
+precip_data <- data.frame(1:nrow(weather), weather[,11])
+
+colnames(precip_data) <- c('Passed', 'Precip_total')
+
+
+# Create a graph for count and precip data
+##############################################################
+#-------------------------------------------------------------
+
+# Create graph for precip data
+
+
+precip_graph <- ggplot(data = precip_data, mapping = aes(Passed, Precip_total)) +
+  geom_point() +
+  geom_line()
+
+# Create a graph combining precip and count data
+
+precip_count_graph <- ggplot(data = NULL) + 
+  geom_line(data = count_data1, mapping = aes(x = Passed, y = Count, color = 'red')) + 
+  geom_line(data = precip_data, mapping = aes(x = Passed, y = Precip_total, color = 'blue')) +
+  geom_smooth(data = count_data1, mapping = aes(x = Passed, y = Count), method = lm) +
+  geom_smooth(data = precip_data, mapping = aes(x=Passed, y=Precip_total), method = lm) +
+  labs(x = 'Hours since tracking start',
+       y = 'Count/Temp',
+       title = 'Trail usage Vs Montpeliers precipitation') +
+  theme_bw()
+
+# Create final graph with the most information without overloading the information
+##############################################################
+#-------------------------------------------------------------
+
+# pull out conditions for color grading the points in the graph
+
+condition_data <- data.frame(Condition = weather[,30])
+
+# add the relevant weather data to a combined dataframe that can be used
+
+relevent_weather <- data.frame(c(temp_data, precip_data, condition_data))
+
+
+# Create a graph combining temperature, precipitation and Count data
+# Show the points of trail usage, with the discrete category of conditions
+# being the color of the points on either temp or 
+
+overall_weather_graph <- ggplot(data = NULL) + 
+  geom_line(data = count_data1, mapping = aes(x = Passed, y = Count, color = 'red')) + 
+  geom_line(data = temp_data, mapping = aes(x = Passed, y = Temp, color = 'blue')) +
+  geom_point(data = relevent_weather, mapping = aes(x = Passed, y = Temp, size = Precip_total, color = Condition)) +
+  geom_smooth(data = count_data1, mapping = aes(x = Passed, y = Count), method = lm) +
+  geom_smooth(data = temp_data, mapping = aes(x=Passed, y=Temp), method = lm) +
+  labs(x = 'Hours since tracking start',
+       y = 'Count/Temp',
+       title = 'Trail usage Vs Montpeliers Weather conditions') +
+  theme_bw()
+
+
+
+
 
 # Print Graphs
 ##############################################################
@@ -195,5 +260,14 @@ print(count_graph)
 # Print Temp
 print(temp_graph)
 
-# Print Combined
+# Print Precip
+print(precip_graph)
+
+# Print Combined Precip and Count
+print(precip_count_graph)
+
+# Print Combined Temp and Count
 print(temp_count_graph)
+
+# Print Combined Temp, Precip and Count 
+print(overall_weather_graph)
