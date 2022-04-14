@@ -100,12 +100,38 @@ count_dataD1 <- cbind(count_dataD1, 1:nrow(count_dataD1))
 colnames(count_dataD1) <- c('Date', 'Count', 'Passed')
 
 
+# Import the weather data and get it in usable forms
+##############################################################
+#-------------------------------------------------------------
+
+# import the main weather table csv
+weatherD <- read.csv('https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/retrievebulkdataset?&key=GVED83F4SV56PXKZRE6V8Z4GJ&taskId=5e387ad01675ac420c3a4e5702e15bb0&zip=false')
+
+# collect the average temp data, precip and condition
+# into a data frame and set colnames
+
+releventD <- data.frame(1:nrow(weatherD), weatherD[,5], weatherD[,11], weatherD[,30])
+
+colnames(releventD) <- c('Passed', 'Temp', 'Precip', 'Condition')
+
 # Make the graphs
 ##############################################################
 #-------------------------------------------------------------
+
+# Make graph of count and temp
+
+count_final <- ggplot(data= NULL, mapping = aes()) +
+  geom_line(data = count_dataD1, mapping = aes(x = Passed, y = Count)) + 
+  geom_line(data = releventD, mapping = aes(x= Passed, y = Temp)) +
+  geom_point(data = releventD, mapping = aes(x= Passed, y = Temp, size = Precip, color = Condition)) +
+  labs(x = 'Days', y = 'Count/AverageTemp', title = 'Days Passed Vs Trail usage and Conditions') +
+  theme_bw()
+
 
 
 
 # Print the Graphs
 ##############################################################
 #-------------------------------------------------------------
+
+print(count_final)
