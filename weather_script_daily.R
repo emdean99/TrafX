@@ -32,7 +32,7 @@ library(viridis)
 # Get the name of the tracker
 # This will be the filename you want to import
 
-tracker_name <- "HBDIRD"
+tracker_name <- "HBDIRD2"
 
 # Get the file type
 
@@ -47,7 +47,7 @@ file_name <- paste(tracker_name, data_type, sep = "")
 count_dataD <- read.csv2(file_name)
 
 
-# Create a new variable for the newly created data frame with 3 columns for
+# Create a new variable for the newly created data frame with 2 columns for
 # The three columns of data
 
 ##############################################################
@@ -105,7 +105,7 @@ colnames(count_dataD1) <- c('Date', 'Count', 'Passed')
 #-------------------------------------------------------------
 
 # import the main weather table csv
-weatherD <- read.csv('https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/retrievebulkdataset?&key=GVED83F4SV56PXKZRE6V8Z4GJ&taskId=5e387ad01675ac420c3a4e5702e15bb0&zip=false')
+weatherD <- read.csv('https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/retrievebulkdataset?&key=NEVVZ6BDLFDNDBMTUR4Y3RA3S&taskId=5f7e951c394f26d126e4ea00373ab151&zip=false')
 
 # collect the average temp data, precip and condition
 # into a data frame and set colnames
