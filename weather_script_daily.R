@@ -123,8 +123,10 @@ colnames(releventD) <- c('Passed', 'Temp', 'Precip', 'Condition')
 count_final <- ggplot(data= NULL, mapping = aes()) +
   geom_line(data = count_dataD1, mapping = aes(x = Passed, y = Count)) + 
   geom_line(data = releventD, mapping = aes(x= Passed, y = Temp)) +
-  geom_point(data = releventD, mapping = aes(x= Passed, y = Temp, size = Precip, color = Condition)) +
+  geom_point(data = releventD, mapping = aes(x = Passed, y = Temp, size = Precip, color = Condition)) +
   labs(x = 'Days', y = 'Count/AverageTemp', title = 'Days Passed Vs Trail usage and Conditions') +
+  geom_smooth(data = count_dataD1, mapping = aes(x = Passed, y = Count), method = lm) +
+  geom_smooth(data = releventD, mapping = aes(x = Passed, y = Temp), method = lm) +
   theme_bw()
 
 

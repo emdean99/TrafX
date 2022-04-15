@@ -1,5 +1,5 @@
 # This script will run an anova on the weather data with the count data for 
-# hourly and also daily values (wondering if night might be problem)
+# daily values
 ##############################################################
 #-------------------------------------------------------------
 
@@ -128,3 +128,5 @@ summary(two_way)
 
 # Use the conditions data to see if there is a different between usage based on 
 # Daily condition reports
+
+  
