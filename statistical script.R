@@ -95,8 +95,35 @@ colnames(stats_weather) <- c('Days', 'Count', 'Tempurature', 'Precipitation', 'C
 ##############################################################
 #-------------------------------------------------------------
 
+# Get summary stats
 summary(stats_weather)
 
 # Run a one way anova with precipitation and count
+# set data as the stats_weather and the precipitation and count as the two to
+# be tested against each other
+
+one_way_precip <- aov(Precipitation ~ Count, data = stats_weather)
+
+# Use summary to print the test statistics
+
+summary(one_way_precip)
+
+# Run a one_way anova with tempurature and count
+# Set data as the stats_wasther and the tempurature and count to be the two to 
+# be tested in the model
+
+one_way_temp <- aov(Tempurature ~ Count, data = stats_weather)
+
+# Use summary to print the statistics
+
+summary(one_way_temp)
+
+# Run a two way with precipitation and temp against count
+two_way <- aov(Count ~ Precipitation + Tempurature, data = stats_weather)
+
+# Use summary to print the stats
+
+summary(two_way)
+
 
 
